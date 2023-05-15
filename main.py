@@ -21,6 +21,7 @@ class Kotan:
         self.name = name
         self.born = born
         self.age = age
+        self.next_age = age+1
         self.days_until = days_until
 
 
@@ -66,7 +67,7 @@ def main():
     for name in name_to_dates.keys():
         born = parse(name_to_dates[name], dayfirst=True).date()
         days_until = count_days_to_next_birthday(born)
-        age = calculate_age(born) + 1
+        age = calculate_age(born)
         persons.append(Kotan(
             name, born, age, days_until
         ))

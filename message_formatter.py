@@ -12,6 +12,7 @@ def format_message(kotans):
     for kotan in kotans:
         name = kotan.name
         age = kotan.age
+        next_age = kotan.next_age
         days = kotan.days_until
         weeks = days / 7
 
@@ -19,9 +20,11 @@ def format_message(kotans):
             emoji = random.choice(emoji_list)
             s += "%s - сегодня исполнилось %d %s %s\n" % (name, age, plural(age, year_plurals), emoji)
         elif days >= 14:
-            s += "%s - %d %s через %d %s\n" % (name, age, plural(age, year_plurals), weeks, plural(weeks, week_plurals))
+            s += "%s - %d %s через %d %s\n" \
+                 % (name, next_age, plural(next_age, year_plurals), weeks, plural(weeks, week_plurals))
         else:
-            s += "%s - %d %s через %d %s\n" % (name, age, plural(age, year_plurals), days, plural(days, day_plurals))
+            s += "%s - %d %s через %d %s\n" \
+                 % (name, next_age, plural(next_age, year_plurals), days, plural(days, day_plurals))
     return s
 
 
