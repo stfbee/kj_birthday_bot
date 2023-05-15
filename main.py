@@ -62,7 +62,7 @@ def main():
     # Считаем дни и даты
     persons = []
     for name in name_to_dates.keys():
-        born = parse(name_to_dates[name]).date()
+        born = parse(name_to_dates[name], dayfirst=True).date()
         days_until = count_days_to_next_birthday(born)
         age = calculate_age(born) + 1
         persons.append(Kotan(
