@@ -7,6 +7,8 @@ from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
+from message_formatter import format_message
+
 SPREADSHEET_ID = os.environ['SPREADSHEET_ID']
 RANGE_NAME = os.environ['RANGE_NAME']
 SERVICE_TOKEN = os.environ['GOOGLE_TOKEN_JSON']
@@ -70,17 +72,16 @@ def main():
         ))
 
     # Сортируем по остатку дней
-    s = sorted(persons, key=lambda x: x.days_until)
+    sorted_list = sorted(persons, key=lambda x: x.days_until)
 
     # Отсекаем челов, у которых др через 60+ дней
-    f = filter(lambda x: x.days_until <= 60, s)
+    filtered_list = filter(lambda x: x.days_until <= 60, sorted_list)
 
     # Формируем сообщение
-    s = "🔥🔥🔥\n"
-    for person in f:
-        s += "%s - дней до др: %d, исполняется %d\n" % (person.name, person.days_until, person.age)
+    message = format_message(filtered_list)
 
-    set_multiline_output("tg_message", s)
+    # Отдаем на следующий шаг
+    set_multiline_output("tg_message", message)
 
 
 def set_multiline_output(name, value):
@@ -94,7 +95,7 @@ def set_multiline_output(name, value):
 def count_days_to_next_birthday(born):
     delta1 = datetime.date(today.year, born.month, born.day)
     delta2 = datetime.date(today.year + 1, born.month, born.day)
-    return ((delta1 if delta1 > today else delta2) - today).days
+    return ((delta1 if delta1 >= today else delta2) - today).days
 
 
 def calculate_age(born):
