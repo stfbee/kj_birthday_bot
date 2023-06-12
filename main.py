@@ -2,6 +2,7 @@ import datetime
 import os.path
 import uuid
 
+from datetime import date
 from dateutil.parser import parse
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
@@ -75,8 +76,16 @@ def main():
     # Сортируем по остатку дней
     sorted_list = sorted(persons, key=lambda x: x.days_until)
 
-    # Отсекаем челов, у которых др через 60+ дней
-    filtered_list = filter(lambda x: x.days_until <= 60, sorted_list)
+    # Скрипт запускается каждый день, но список будущих др над выводить только по понедельникам
+    if date.today().weekday() == 0:
+        # Отсекаем челов, у которых др через 60+ дней
+        filtered_list = filter(lambda x: x.days_until <= 60, sorted_list)
+    else:
+        # По всем остальным дням недели пишем только о сегодняшних др
+        filtered_list = filter(lambda x: x.days_until == 0, sorted_list)
+
+    if not filtered_list: 
+        return
 
     # Формируем сообщение
     message = format_message(filtered_list)
