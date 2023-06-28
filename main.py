@@ -22,7 +22,7 @@ class Kotan:
         self.name = name
         self.born = born
         self.age = age
-        self.next_age = age+1
+        self.next_age = age + 1
         self.days_until = days_until
 
 
@@ -79,12 +79,12 @@ def main():
     # Скрипт запускается каждый день, но список будущих др над выводить только по понедельникам
     if date.today().weekday() == 0:
         # Отсекаем челов, у которых др через 60+ дней
-        filtered_list = filter(lambda x: x.days_until <= 60, sorted_list)
+        filtered_list = list(filter(lambda x: x.days_until <= 60, sorted_list))
     else:
         # По всем остальным дням недели пишем только о сегодняшних др
-        filtered_list = filter(lambda x: x.days_until == 0, sorted_list)
+        filtered_list = list(filter(lambda x: x.days_until == 0, sorted_list))
 
-    if not filtered_list: 
+    if len(filtered_list) == 0:
         return
 
     # Формируем сообщение
