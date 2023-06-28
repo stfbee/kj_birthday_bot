@@ -85,12 +85,14 @@ def main():
         filtered_list = list(filter(lambda x: x.days_until == 0, sorted_list))
 
     if len(filtered_list) == 0:
+        set_multiline_output("has_answer", False)
         return
 
     # Формируем сообщение
     message = format_message(filtered_list)
 
     # Отдаем на следующий шаг
+    set_multiline_output("has_answer", True)
     set_multiline_output("tg_message", message)
 
 
