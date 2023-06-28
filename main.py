@@ -92,7 +92,7 @@ def main():
     message = format_message(filtered_list)
 
     # Отдаем на следующий шаг
-    set_multiline_output("has_answer", True)
+    set_multiline_output("has_answer", "true")
     set_multiline_output("tg_message", message)
 
 

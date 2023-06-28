@@ -34,7 +34,7 @@ jobs:
         run: python main.py
 
       - name: send telegram message
-        if: ${{ steps.script.outputs.has_answer == true }}
+        if: ${{ steps.script.outputs.has_answer == "true" }}
         uses: appleboy/telegram-action@master
         with:
           to: ${{ vars.TG_CHAT_ID }}
