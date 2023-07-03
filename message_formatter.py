@@ -14,7 +14,7 @@ def format_message(kotans):
         age = kotan.age
         next_age = kotan.next_age
         days = kotan.days_until
-        weeks = days / 7
+        weeks = int(days / 7)
 
         if days == 0:
             emoji = random.choice(emoji_list)
