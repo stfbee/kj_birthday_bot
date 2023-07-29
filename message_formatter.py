@@ -20,11 +20,11 @@ def format_message(kotans):
             emoji = random.choice(emoji_list)
             s += "%s - сегодня исполнилось %d %s %s\n" % (name, age, plural(age, year_plurals), emoji)
         elif days >= 14:
-            s += "%s - %d %s через %d %s\n" \
-                 % (name, next_age, plural(next_age, year_plurals), weeks, plural(weeks, week_plurals))
+            s += "%s через %d %s\n" \
+                 % (name, weeks, plural(weeks, week_plurals))
         else:
-            s += "%s - %d %s через %d %s\n" \
-                 % (name, next_age, plural(next_age, year_plurals), days, plural(days, day_plurals))
+            s += "%s через %d %s\n" \
+                 % (name, days, plural(days, day_plurals))
     return s
 
 
