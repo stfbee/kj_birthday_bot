@@ -2,8 +2,8 @@ name: Отправка следующих др в чат
 on:
   workflow_dispatch:
   schedule:
-    # В 9:00 по понедельникам (UTC)
-    - cron: '0 9 * * *'
+    # В 6:00 по понедельникам (UTC)
+    - cron: '0 6 * * *'
 
 permissions:
   contents: read
