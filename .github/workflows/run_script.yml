@@ -40,3 +40,4 @@ jobs:
           to: ${{ vars.TG_CHAT_ID }}
           token: ${{ secrets.TG_BOT_TOKEN }}
           message: ${{steps.script.outputs.tg_message}}
+          format: markdown
