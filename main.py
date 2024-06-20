@@ -18,12 +18,20 @@ today = datetime.date.today()
 
 
 class Kotan:
-    def __init__(self, name, born, age, days_until):
+    def __init__(self, name, born, age, days_until, chat_link):
         self.name = name
         self.born = born
         self.age = age
         self.next_age = age + 1
         self.days_until = days_until
+        self.chat_link = chat_link
+
+
+class RawRow:
+    def __init__(self, name, born, chat_link):
+        self.name = name
+        self.born = born
+        self.chat_link = chat_link
 
 
 def prepare_token_file():
@@ -58,31 +66,29 @@ def main():
     values = retrieve_data_from_sheets()
 
     # Фильтруем строки, чтобы у нас были только непустые значения
-    name_to_dates = {}
+    raw_rows = []
     for row in values:
-        if len(row) == 3 and (row[0] or row[2]):
-            name_to_dates[row[0]] = row[2]
+        if len(row) == 9 and (row[0] or row[2]):
+            raw_rows.append(RawRow(name=row[0], born=row[2], chat_link=row[8]))
 
     # Считаем дни и даты
     persons = []
-    for name in name_to_dates.keys():
-        born = parse(name_to_dates[name], dayfirst=True).date()
+    for raw_row in raw_rows:
+        born = parse(raw_row.born, dayfirst=True).date()
         days_until = count_days_to_next_birthday(born)
         age = calculate_age(born)
         persons.append(Kotan(
-            name, born, age, days_until
+            raw_row.name, born, age, days_until, raw_row.chat_link
         ))
 
     # Сортируем по остатку дней
     sorted_list = sorted(persons, key=lambda x: x.days_until)
 
     # Скрипт запускается каждый день, но список будущих др над выводить только по понедельникам
-    if date.today().weekday() == 0:
+
         # Отсекаем челов, у которых др через 60+ дней
-        filtered_list = list(filter(lambda x: x.days_until <= 60, sorted_list))
-    else:
-        # По всем остальным дням недели пишем только о сегодняшних др
-        filtered_list = list(filter(lambda x: x.days_until == 0, sorted_list))
+    filtered_list = list(filter(lambda x: x.days_until <= 60, sorted_list))
+
 
     if len(filtered_list) == 0:
         set_multiline_output("has_answer", False)

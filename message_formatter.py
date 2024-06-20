@@ -12,9 +12,9 @@ def format_message(kotans):
     for kotan in kotans:
         name = kotan.name
         age = kotan.age
-        next_age = kotan.next_age
         days = kotan.days_until
         weeks = int(days / 7)
+        chat_link = kotan.chat_link
 
         if days == 0:
             emoji = random.choice(emoji_list)
@@ -23,8 +23,8 @@ def format_message(kotans):
             s += "%s через %d %s\n" \
                  % (name, weeks, plural(weeks, week_plurals))
         else:
-            s += "%s через %d %s\n" \
-                 % (name, days, plural(days, day_plurals))
+            s += "%s через %d %s %s\n" \
+                 % (name, days, plural(days, day_plurals), format_link(chat_link))
     return s
 
 
@@ -38,3 +38,7 @@ def plural(count, plurals):
         return plurals[1]
     else:
         return plurals[2]
+
+
+def format_link(link):
+    return "[чат](%s)" % link
