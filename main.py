@@ -91,7 +91,6 @@ def main():
     else:
         # По всем остальным дням недели пишем только о сегодняшних др
         filtered_list = list(filter(lambda x: x.days_until == 0, sorted_list))
-    filtered_list = list(filter(lambda x: x.days_until <= 60, sorted_list))
 
     if len(filtered_list) == 0:
         set_multiline_output("has_answer", False)
