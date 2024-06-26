@@ -85,10 +85,13 @@ def main():
     sorted_list = sorted(persons, key=lambda x: x.days_until)
 
     # Скрипт запускается каждый день, но список будущих др над выводить только по понедельникам
-
+    if date.today().weekday() == 0:
         # Отсекаем челов, у которых др через 60+ дней
+        filtered_list = list(filter(lambda x: x.days_until <= 60, sorted_list))
+    else:
+        # По всем остальным дням недели пишем только о сегодняшних др
+        filtered_list = list(filter(lambda x: x.days_until == 0, sorted_list))
     filtered_list = list(filter(lambda x: x.days_until <= 60, sorted_list))
-
 
     if len(filtered_list) == 0:
         set_multiline_output("has_answer", False)
