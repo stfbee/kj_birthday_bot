@@ -33,17 +33,17 @@ jobs:
           RANGE_NAME: ${{ vars.RANGE_NAME }}
         run: python main.py
 
-      # - name: send telegram message
-      #   if: ${{ steps.script.outputs.has_answer == 'true' }}
-      #   uses: appleboy/telegram-action@master
-      #   with:
-      #     to: ${{ vars.TG_CHAT_ID }}
-      #     token: ${{ secrets.TG_BOT_TOKEN }}
-      #     message: ${{steps.script.outputs.tg_message}}
-      #     format: markdown
+      - name: send telegram message
+        if: ${{ steps.script.outputs.has_answer == 'true' }}
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ vars.TG_CHAT_ID }}
+          token: ${{ secrets.TG_BOT_TOKEN }}
+          message: ${{steps.script.outputs.tg_message}}
+          format: markdown
       
-      - name: Send Telegram Message
-        run: |
-          msg_text=${{steps.script.outputs.tg_message}}
-          curl -s -X POST 'https://api.telegram.org/bot${{ secrets.TG_BOT_TOKEN }}/sendMessage' \
-          -d "chat_id=${{ vars.TG_CHAT_ID }}&text=${msg_text}&reply_to_message_id=${{ vars.TG_TOPIC_ID }}"
+      # - name: Send Telegram Message
+      #   run: |
+      #     msg_text=${{steps.script.outputs.tg_message}}
+      #     curl -s -X POST 'https://api.telegram.org/bot${{ secrets.TG_BOT_TOKEN }}/sendMessage' \
+      #     -d "chat_id=${{ vars.TG_CHAT_ID }}&text=${msg_text}&reply_to_message_id=${{ vars.TG_TOPIC_ID }}"
