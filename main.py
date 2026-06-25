@@ -68,7 +68,7 @@ def main():
     # Фильтруем строки, чтобы у нас были только непустые значения
     raw_rows = []
     for row in values:
-        if len(row) == 9 and (row[0] or row[2]):
+        if len(row) == 8 and (row[0] or row[2]):
             raw_rows.append(RawRow(name=row[0], born=row[2], chat_link=row[7]))
 
     # Считаем дни и даты
